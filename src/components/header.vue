@@ -1,52 +1,58 @@
 <template>
     <div class="header">
-        <div class="logo">
-            <img src="../assets/img/page-logo.png" alt="">
-        </div>
-        <div class="menu">
-            <el-menu
-                class="el-menu-demo"
-                mode="horizontal"
-                background-color="transparent"
-                @open="handleOpen"
-            >
-                <template v-for="(item, index) in menuList" :key="index">
-                    <el-menu-item 
-                        :index="index"
-                        v-if="!item.child"
+        <el-row>
+            <el-col :span="12">
+                <div class="logo">
+                    <img src="../assets/img/page-logo.png" alt="">
+                </div>
+            </el-col>
+            <el-col :span="12">
+                <div class="menu">
+                    <el-menu
+                        class="el-menu-demo"
+                        mode="horizontal"
+                        background-color="transparent"
+                        @open="handleOpen"
                     >
-                        <svg class="icon cumIcon" aria-hidden="true">
-                            <use :xlink:href="'#'+item.icon"></use>
-                        </svg>
-                        {{ item.title }}
-                    </el-menu-item>
-                    <el-sub-menu v-if="item.child">
-                        <template #title>
-                            <svg class="icon cumIcon" aria-hidden="true">
-                                <use :xlink:href="'#'+item.icon"></use>
-                            </svg>
-                            {{ item.title }}
+                        <template v-for="(item, index) in menuList" :key="index">
+                            <el-menu-item 
+                                :index="index"
+                                v-if="!item.child"
+                            >
+                                <svg class="icon cumIcon" aria-hidden="true">
+                                    <use :xlink:href="'#'+item.icon"></use>
+                                </svg>
+                                {{ item.title }}
+                            </el-menu-item>
+                            <el-sub-menu v-if="item.child">
+                                <template #title>
+                                    <svg class="icon cumIcon" aria-hidden="true">
+                                        <use :xlink:href="'#'+item.icon"></use>
+                                    </svg>
+                                    {{ item.title }}
+                                </template>
+                                <el-menu-item 
+                                    v-for="(childItem, childIndex) in item.child" :key="childIndex"
+                                    :index="childIndex"
+                                >
+                                    <svg class="icon cumIcon" aria-hidden="true">
+                                        <use :xlink:href="'#'+childItem.icon"></use>
+                                    </svg>
+                                    {{ childItem.title }}
+                                </el-menu-item>
+                            </el-sub-menu>
                         </template>
-                        <el-menu-item 
-                            v-for="(childItem, childIndex) in item.child" :key="childIndex"
-                            :index="childIndex"
-                        >
-                            <svg class="icon cumIcon" aria-hidden="true">
-                                <use :xlink:href="'#'+childItem.icon"></use>
-                            </svg>
-                            {{ childItem.title }}
-                        </el-menu-item>
-                    </el-sub-menu>
-                </template>
-                
-            </el-menu>
-        </div>
+                        
+                    </el-menu>
+                </div>
+            </el-col>
+        </el-row>
     </div>
 </template>
 
 <script setup lang="ts">
     import { reactive, ref, onMounted } from 'vue'
-    const menuList:listType[] = reactive([
+    const menuList:listType[] = [
         {
             title:'首页',
             path:'index',
@@ -77,7 +83,7 @@
                 }
             ]
         }
-    ])
+    ]
     
     const handleOpen = (key: string, keyPath: string[]) => {
         console.log(key, keyPath)
@@ -102,20 +108,25 @@
     box-sizing: border-box;
 }
 .logo{
-    height: 50px;
+    // height: 50px;
     display: flex;
     align-items: center;
     img{
-        height: 50px;
+        width: -webkit-fill-available;
+        max-width: 312px;
     }
 }
 .menu{
-    width: 30%;
+    width: 100%;
+    display: flex;
+    justify-content: right;
+    transform: translateX(-5%);
 }
 
 .el-menu--horizontal{
     border: none;
     background: transparent;
+    width: 55%;
 }
 .el-menu-item{
     font-size: 17px;
@@ -138,5 +149,12 @@
 .cumIcon{
     font-size: 22px;
     margin-right: 3px;
+}
+
+.el-row{
+    width: 100%;
+    .el-col{
+        display: flex;
+    }
 }
 </style>

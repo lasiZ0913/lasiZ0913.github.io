@@ -1,27 +1,36 @@
 <template>
-    <div class="clock">  
-        <div class="numbers">  
-            <span style="--i:0;"><b>12</b></span>  
-            <span style="--i:1;"><b>3</b></span>  
-            <span style="--i:2;"><b>6</b></span>  
-            <span style="--i:3;"><b>9</b></span>  
-            <div class="circle" id="hr"><i></i></div>  
-            <div class="circle" id="mn"><i></i></div>  
-            <div class="circle" id="sc"><i></i></div>  
+    <div class="time-box">
+        <img class="time-up" src="./static/img/time-up.png" alt="">
+        <div class="clock">  
+            <div class="numbers">  
+                <span style="--i:0;"><b>12</b></span>  
+                <span style="--i:1;"><b>3</b></span>  
+                <span style="--i:2;"><b>6</b></span>  
+                <span style="--i:3;"><b>9</b></span>  
+                <div class="circle" id="hr"><i></i></div>  
+                <div class="circle" id="mn"><i></i></div>  
+                <div class="circle" id="sc"><i></i></div>  
+            </div>  
         </div>  
-    </div>  
+    </div>
 </template>
 
 <script setup lang="ts">
+    import { onMounted } from "vue";
+
+    onMounted(() => {
+        let date = new Date();  
+        let ss = date.getSeconds() * 6;  
+        document.getElementById("sc").style.setProperty("--scRotate1", `rotateZ(${ss}deg)`)
+        document.getElementById("sc").style.setProperty("--scRotate2", `rotateZ(${ss+360}deg)`)
+    }) 
     setInterval(() => {  
         // 需要将时间与指针角度进行转换  
         let date = new Date();  
         let hh = date.getHours() * 30;  
         let mm = date.getMinutes() * 6;  
-        let ss = date.getSeconds() * 6;  
         document.getElementById("hr").style.transform = `rotateZ(${hh + (mm / 12)}deg)`;  
         document.getElementById("mn").style.transform = `rotateZ(${mm}deg)`  
-        document.getElementById("sc").style.transform = `rotateZ(${ss}deg)`  
     }, 1000)  
 </script>
 
@@ -36,9 +45,10 @@ body {
 }  
 
 .clock {  
+    animation: initRotate 10s ease-in-out;  
     position: relative;  
-    width: 100%;  
-    height: 100%;  
+    width: 200px;  
+    height: 200px;  
     background: #c9d5e0;  
     display: flex;  
     justify-content: center;  
@@ -46,8 +56,7 @@ body {
     border-radius: 50px;  
     box-shadow: 30px 30px 30px -10px rgb(0, 0, 0, 0.15),  
         inset 15px 15px 10px rgb(255, 255, 255, 0.75),  
-        -15px -15px 35px rgb(255, 255, 255, 0.55),  
-        inset -1px -1px 10px rgb(0, 0, 0, 0.2)  
+            inset -1px -1px 10px rgb(0, 0, 0, 0.2)  
 }  
 
 .clock::before {  
@@ -65,7 +74,9 @@ body {
 
 .numbers {  
     position: absolute;  
-    inset: 35px;  
+    // inset: 35px;  
+    height: 80%;
+    width: 80%;
     background-color: #89ABCA;  
     border-radius: 50%;  
     box-shadow: 5px 5px 15px #152b4a66,  
@@ -99,11 +110,11 @@ body {
 
 @keyframes animate {  
     0% {  
-        transform: rotate(360deg);  
+        transform: rotate(0deg);  
     }  
 
     100% {  
-        transform: rotate(0deg);  
+        transform: rotate(360deg);  
     }  
 }  
 
@@ -136,17 +147,73 @@ body {
 
 #hr i {  
     width: 4px;  
-    transform: scaleY(0.3);  
+    transform: scaleY(0.4);  
 }  
 
 #mn i {  
-    transform: scaleY(0.45);  
+    transform: scaleY(0.55);  
 }  
+
+#sc{
+    animation: scRotate 60s linear infinite;  
+}
+@keyframes scRotate {  
+    0% {  
+        transform: var(--scRotate1);
+    }  
+
+    100% {  
+        transform: var(--scRotate2);  
+    }  
+}
 
 #sc i {  
     width: 2px;  
-    transform: scaleY(0.55);  
+    transform: scaleY(0.65);  
     background-color: #FBE274;  
-    box-shadow: 0 30px 0 #e91e63;  
+    box-shadow: 0 30px 0 #e91e63;
 }  
+
+.time-box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 250px;
+    transform-origin: top center;
+    animation: initRotate 10s ease-in-out;  
+    .time-up{
+        height: 250px;
+        width: 60px;
+    }
+}
+
+@keyframes initRotate {  
+    0% {  
+        transform: rotateZ(-95deg);  
+    }
+    20% {  
+        transform: rotateZ(25deg);  
+    }
+    40% {  
+        transform: rotateZ(-15deg);  
+    }
+    60% {  
+        transform: rotateZ(15deg);  
+    }
+    80% {  
+        transform: rotateZ(-7deg);  
+    }  
+    100% {  
+        transform: rotateZ(0deg);  
+    } 
+}
+
+// 媒体查询
+// @media screen and (max-width:600px) {
+//     .clock {
+//         width: 100px;  
+//         height: 100px;  
+//     }
+// }
+
 </style>
