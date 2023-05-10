@@ -1,16 +1,20 @@
 <template>
   <div class="box">
-    <Header></Header>
-    <Time class="time"></Time>
+    <!-- <Header></Header> -->
+    <!-- <Time class="time"></Time> -->
+    <Button name="Log in"></Button>
     <el-button size="large" circle class="counterBtn" @click="counterTag = !counterTag">
       <svg class="icon cumIcon" aria-hidden="true">
         <use xlink:href="#icon-jisuanqi"></use>
       </svg>
     </el-button>
 
-    <transition enter-active-class="animate__animated animate__fadeInRightBig" leave-active-class="animate__animated animate__fadeOut">
+    <transition 
+      :duration="{enter:500, leave:500}"
+      enter-active-class="animate__animated animate__bounceInRight" 
+      leave-active-class="animate__animated animate__backOutDown">
       <div class="counter" v-if="counterTag">
-        
+        <input type="text">
       </div>
     </transition>
       
@@ -21,11 +25,14 @@
   import "animate.css"
   import Header from './header.vue'
   import Time from './tools-com/time.vue'
+  import Button from './control-com/button.vue'
   import { ElMessageBox } from 'element-plus'
   import { ref } from 'vue'
   import { hook } from '../assets/ts/hook'
 
   const counterTag = ref(false)
+  const cost:number|null = ref(null)
+  const line:number|null = ref(null)
 </script>
 
 <style scoped="true" lang="scss">

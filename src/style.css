@@ -21,9 +21,25 @@
   overflow: hidden;
 }
 
+input{
+  height: 40px;
+  background: #fff;
+  border: 2px solid #000;
+  border-radius: 20px;
+  color: #000;
+  font-size: 22px;
+  width: 70%;
+  padding-left: 10px;
+  outline: none;
+}
+input:focus{
+  border: 2px solid #000;
+}
+
 *{
   margin: 0;
   padding: 0;
+  font-family: Eina01,-apple-system,blinkmacsystemfont,Segoe UI,roboto,helvetica,arial,sans-serif,Apple \ Color Emoji,Segoe UI Emoji,Segoe \ UI Symbol !important;
 }
 
 a {
