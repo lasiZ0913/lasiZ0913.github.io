@@ -1,4 +1,5 @@
 const hook = {
+    // 日期格式化
     showLocale:<T>(objD:Date,tag:boolean):T => {
         let str;
         let yy = objD.getUTCFullYear();
@@ -27,6 +28,17 @@ const hook = {
             str = yy + "-" + MM + "-" + dd;
         }
         return (<T>str);
+    },
+
+    // 复制内容到剪切板
+    copy:(text,op:string) => {
+        const el = document.createElement('input')
+        let value:string = JSON.stringify(text)
+        el.setAttribute('value', value.substring(1,value.length-1)+op)
+        document.body.appendChild(el)
+        el.select()
+        document.execCommand('copy')
+        document.body.removeChild(el)
     }
 }
 

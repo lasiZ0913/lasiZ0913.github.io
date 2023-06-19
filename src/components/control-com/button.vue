@@ -1,5 +1,5 @@
 <template>
-    <a target="_blank" class="button" href="javascript">
+    <a class="button" href="javascript:;">
         <span class="spanDecoration"></span>
         <span class="name">{{ name }}</span>
     </a>
@@ -20,13 +20,13 @@ const props = withDefaults(defineProps<{
 })
 
 onMounted(() => {
-    document.querySelector('.button').style.setProperty("--btnBgcOne", props.btnBgcOne)
-    document.querySelector('.button').style.setProperty("--btnBgcTwo", props.btnBgcTwo)
+    (document.querySelector('.button') as HTMLElement).style.setProperty("--btnBgcOne", props.btnBgcOne);
+    (document.querySelector('.button') as HTMLElement).style.setProperty("--btnBgcTwo", props.btnBgcTwo);
     if(props.mode == 2){
         // mode == 2 时，将遮罩层和伪类层背景透明，将按钮的背景色暴露出来，再将字体颜色设置为 白色即可
-        document.querySelector('.spanDecoration').style.setProperty("--btnBgc", 'transparent')
-        document.querySelector('.button').style.setProperty("--btnBgc", 'transparent')
-        document.querySelector('.name').style.setProperty("color", '#fff')
+        (document.querySelector('.spanDecoration') as HTMLElement).style.setProperty("--btnBgc", 'transparent');
+        (document.querySelector('.button') as HTMLElement).style.setProperty("--btnBgc", 'transparent');
+        (document.querySelector('.name') as HTMLElement).style.setProperty("color", '#fff');
     }
 })
 
@@ -59,6 +59,7 @@ $btnBgcTwo: var(--btnBgcTwo, #6b53ff);
     position: relative;
     text-align: center;
     text-decoration: none;
+    margin: .3rem .4rem;
     .spanDecoration{
         border: 1px solid transparent;
         background-clip: padding-box;
